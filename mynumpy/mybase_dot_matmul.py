@@ -14,3 +14,21 @@ print("\n@/matmul 结果 (形状 {}):\n{}".format(matmul_result.shape, matmul_re
 # 使用 dot
 dot_result = np.dot(A, B)
 print("\ndot 结果 (形状 {}):\n{}".format(dot_result.shape, dot_result))
+
+
+A = np.array([[4, 3, 1],
+              [6, 3, 1],
+              [8, 4, 1]])
+
+b = np.array([1, 0, 2])
+
+
+print(b)
+print(A @ b)
+print(b.shape)
+print((A @ b).shape)
+
+t = np.array([1, 0, 2]) @ A
+print(t)
+print(t.shape)
+
