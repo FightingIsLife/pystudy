@@ -4,6 +4,7 @@ import numpy as np
 A = np.array([[3, 4],
               [1, 3]])
 
+# Q 是正交矩阵， R是上三角矩阵
 Q, R = np.linalg.qr(A)
 
 print("Q矩阵（旋转部分）:\n", Q)

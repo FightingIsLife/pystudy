@@ -6,3 +6,6 @@ A = np.array([[4, 2],
 [2, 5]])
 C = sp.linalg.cholesky(A)
 print(C)
+print(C.T)
+# 正定矩阵
+print(C.T @ C)

@@ -10,8 +10,11 @@ A = np.array([[4.0, 3, 1],
 print(A)
 
 r = sp.linalg.lu(A)
+# 置换矩阵
 P = np.array(r[0])
+# 下三角矩阵
 L = np.array(r[1])
+# 上三角矩阵
 U = np.array(r[2])
 
 
