@@ -1,54 +1,45 @@
 import torch
 import numpy as np
+import torch.nn as nn
 
-# 创建一个 2x3 的全 0 张量
-a = torch.zeros(2, 3)
-print(a)
+# 从Java视角理解（对比原生数组）
+# int[] javaArray = {1,2,3};
+torch_tensor = torch.tensor([1, 2, 3])  # 一维张量（向量）
 
-# 创建一个 2x3 的全 1 张量
-b = torch.ones(2, 3)
-print(b)
+# 关键操作（无需数学推导）：
+x = torch.randn(3, 4)  # 模拟Java: new float[3][4]
+y = x[:, 1:3]  # 切片操作 → Python语法直接迁移
+print(x)
+print(y)
+z = torch.cat([x, x], dim=0)  # 数组拼接 → System.arraycopy进阶版
 
-# 创建一个 2x3 的随机数张量
-c = torch.randn(2, 3)
-print(c)
+print(z)
 
-# 从 NumPy 数组创建张量
-numpy_array = np.array([[1, 2], [3, 4]])
-tensor_from_numpy = torch.from_numpy(numpy_array)
-print(tensor_from_numpy)
+zx = torch.cat([x, x], dim=1)
 
-# 在指定设备（CPU/GPU）上创建张量
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-print(device)
-d = torch.randn(2, 3, device=device)
-print(d)
+print(zx)
 
-# 张量相加
-e = torch.randn(2, 3)
-f = torch.randn(2, 3)
-print(e + f)
-
-# 逐元素乘法
-print(e * f)
-
-# 张量的转置
-g = torch.randn(3, 2)
-
-print("\n")
-print(g)
-print(g.t())  # 或者 g.transpose(0, 1)
-
-# 张量的形状
-print(g.shape)  # 返回形状
+# 场景：已知函数 y = x²，求 x=3 处的导数
+x = torch.tensor(3.0, requires_grad=True)
+print(x)
+y = x ** 2
+print(y.backward())  # 自动计算梯度
+print(x.grad)  # 输出: tensor(4.0) → 即 2x 在x=2的值
 
 
-# 创建一个需要梯度的张量
-tensor_requires_grad = torch.tensor([1.0], requires_grad=True)
 
-# 进行一些操作
-tensor_result = tensor_requires_grad * 2
+# Java开发者类比：类似实现一个简单的Spring Boot Controller
+class Net(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.fc1 = nn.Linear(784, 128)  # 全连接层 → 类似定义DTO字段
+        self.fc2 = nn.Linear(128, 10)  # 输出层 → 类似Controller返回结构
 
-# 计算梯度
-tensor_result.backward()
-print(tensor_requires_grad.grad)  # 输出梯度
+    def forward(self, x):  # 类似Spring MVC的请求处理流程
+        x = torch.relu(self.fc1(x))  # 激活函数 → 业务逻辑处理
+        x = self.fc2(x)  # 输出层处理
+        return x
+
+
+model = Net()
+print(model)  # 查看结构（会打印各层维度）
