@@ -8,7 +8,6 @@ from sklearn.preprocessing import StandardScaler
 
 # 步骤1：加载原始数据
 moments = pd.read_json('../big_json/moments/moments_merged.json', orient='records')
-likes = pd.read_json('../big_json/moments/likes_merged.json', orient='records')
 
 # 步骤2：计算用户历史平均点赞数
 user_avg = pd.DataFrame({
